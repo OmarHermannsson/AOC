@@ -44,12 +44,14 @@ for y, line in enumerate(galaxy_map):
     for x, char in enumerate(line):
         galaxy_line.append(char)
         if x in no_gal_col:
-            for _ in range(1000000):
-                galaxy_line.append(char)
+            pass
+            #for _ in range(1000000):
+                #galaxy_line.append(char)
     expanded_galaxy_map.append(galaxy_line)
     if y in no_gal_row:
-        for _ in range(1000000):
-            expanded_galaxy_map.append(galaxy_line)
+        pass
+        #for _ in range(1000000):
+            #expanded_galaxy_map.append(galaxy_line)
 
 galaxies = []
 
@@ -58,7 +60,22 @@ for y, line in enumerate(expanded_galaxy_map):
         if char == "#":
             galaxies.append((x,y))
 
-#print(galaxies)
+print("No_gal_row:", no_gal_row)
+print("No_gal_col:", no_gal_col)
+#print("Galaxies:", galaxies)
+
+exp_galaxies = []
+for g in galaxies:
+    gx, gy = g
+    nx = gx
+    ny = gy
+    for xp in no_gal_col:
+        if gx >= xp:
+            nx += 999999
+    for yp in no_gal_row:
+        if gy >= yp:
+            ny += 999999
+    exp_galaxies.append((nx,ny))
 
 def get_distance(x,y):
     sum = 0
@@ -68,9 +85,9 @@ def get_distance(x,y):
 
 sum = 0
 galaxy_pairs = []
-for n1 in range(len(galaxies)):
-    for n2 in galaxies[n1+1:]:
-        xg = galaxies[n1]
+for n1 in range(len(exp_galaxies)):
+    for n2 in exp_galaxies[n1+1:]:
+        xg = exp_galaxies[n1]
         yg = n2
         dist = get_distance(xg, yg)
         sum += dist
@@ -78,15 +95,5 @@ for n1 in range(len(galaxies)):
         #print(f"{xg},{yg} - {dist}")
 
 print("Sum:", sum)
-#print (galaxy_pairs)
-#print (len(galaxy_pairs))
 
-
-
-#print (len(galaxy_pairs))
-# print(no_gal_row)
-# print(no_gal_col)
-
-# for line in expanded_galaxy_map:
-#     print(''.join(line))
         
